@@ -14,19 +14,19 @@ To build and run: `zig build run`
 
 ## Versions
 
-[zigglgen](https://github.com/castholm/zigglgen/releases)
+1. [zigglgen](https://github.com/castholm/zigglgen/releases)
 
-`0.2.3`
+- `0.2.3`
 
-[mach-glfw](https://github.com/slimsag/mach-glfw)
+2. [mach-glfw](https://github.com/slimsag/mach-glfw)
 
-commit: `fb4ae48540454270ab969c8c645bbc6eff3c2dfb`
+- commit: `fb4ae48540454270ab969c8c645bbc6eff3c2dfb`
 
-nominated zig version `2024.5.0-mach`, `0.13.0-dev.351+64ef45eb0`
+3. nominated zig version `2024.5.0-mach`, `0.13.0-dev.351+64ef45eb0`
 
-[nominated zig docs](https://machengine.org/docs/nominated-zig/)
+- [nominated zig docs](https://machengine.org/docs/nominated-zig/)
 
-downloaded directly: [macOS aarch64 (Apple Silicon)](zig-macos-aarch64-0.13.0-dev.351+64ef45eb0.tar.xz)
+- downloaded directly: [macOS aarch64 (Apple Silicon)](zig-macos-aarch64-0.13.0-dev.351+64ef45eb0.tar.xz)
 
 ## References
 
