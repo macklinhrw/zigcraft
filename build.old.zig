@@ -15,19 +15,19 @@ pub fn build(b: *std.Build) void {
     // set a preferred release mode, allowing the user to decide how to optimize.
     const optimize = b.standardOptimizeOption(.{});
 
-    // const lib = b.addStaticLibrary(.{
-    //     .name = "zigcraft",
-    //     // In this case the main source file is merely a path, however, in more
-    //     // complicated build scripts, this could be a generated file.
-    //     .root_source_file = b.path("src/root.zig"),
-    //     .target = target,
-    //     .optimize = optimize,
-    // });
+    const lib = b.addStaticLibrary(.{
+        .name = "zigcraft",
+        // In this case the main source file is merely a path, however, in more
+        // complicated build scripts, this could be a generated file.
+        .root_source_file = b.path("src/root.zig"),
+        .target = target,
+        .optimize = optimize,
+    });
 
-    // // This declares intent for the library to be installed into the standard
-    // // location when the user invokes the "install" step (the default step when
-    // // running `zig build`).
-    // b.installArtifact(lib);
+    // This declares intent for the library to be installed into the standard
+    // location when the user invokes the "install" step (the default step when
+    // running `zig build`).
+    b.installArtifact(lib);
 
     const exe = b.addExecutable(.{
         .name = "zigcraft",
@@ -35,6 +35,29 @@ pub fn build(b: *std.Build) void {
         .target = target,
         .optimize = optimize,
     });
+
+    // exe.addSystemFrameworkPath(.{ .cwd_relative = "/System/Library/Frameworks/OpenGL.framework" });
+    // exe.addLibraryPath(.{ .cwd_relative = "/opt/homebrew/lib" }); // Adjust this path based on your system
+    // exe.addIncludePath(.{ .cwd_relative = "/opt/homebrew/Cellar/glfw/3.4/include" });
+    // exe.addIncludePath(.{ .cwd_relative = "/opt/homebrew/Cellar/glew/2.2.0_1/include" });
+
+    // Add OpenGL (zgl)
+    // const zgl = b.dependency("zgl", .{
+    //     .target = target,
+    //     .optimize = optimize,
+    // });
+    // exe.root_module.addImport("zgl", zgl.module("zgl"));
+
+    // Add GLFW
+    // exe.linkSystemLibrary("glfw");
+
+    // Add OpenGL
+    // exe.linkSystemLibrary("OpenGL");
+
+    // On macOS, we need to link against the framework
+    // if (target.result.isDarwin()) {
+    //     exe.linkFramework("OpenGL");
+    // }
 
     // Use mach-glfw.
     const mach_glfw_dep = b.dependency("mach-glfw", .{
@@ -81,13 +104,13 @@ pub fn build(b: *std.Build) void {
 
     // Creates a step for unit testing. This only builds the test executable
     // but does not run it.
-    // const lib_unit_tests = b.addTest(.{
-    //     .root_source_file = b.path("src/root.zig"),
-    //     .target = target,
-    //     .optimize = optimize,
-    // });
+    const lib_unit_tests = b.addTest(.{
+        .root_source_file = b.path("src/root.zig"),
+        .target = target,
+        .optimize = optimize,
+    });
 
-    // const run_lib_unit_tests = b.addRunArtifact(lib_unit_tests);
+    const run_lib_unit_tests = b.addRunArtifact(lib_unit_tests);
 
     const exe_unit_tests = b.addTest(.{
         .root_source_file = b.path("src/main.zig"),
@@ -101,6 +124,6 @@ pub fn build(b: *std.Build) void {
     // the `zig build --help` menu, providing a way for the user to request
     // running the unit tests.
     const test_step = b.step("test", "Run unit tests");
-    // test_step.dependOn(&run_lib_unit_tests.step);
+    test_step.dependOn(&run_lib_unit_tests.step);
     test_step.dependOn(&run_exe_unit_tests.step);
 }
