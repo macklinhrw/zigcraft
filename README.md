@@ -12,6 +12,8 @@ ln -s /path/to/unarchived/installation/zig /usr/local/bin/zig
 
 To build and run: `zig build run`
 
+To get ZLS working I folowed [this guide](https://ziggit.dev/t/zls-not-working-with-imported-raylib/3986/3).
+
 ## Versions
 
 1. [zigglgen](https://github.com/castholm/zigglgen/releases)

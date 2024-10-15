@@ -37,19 +37,19 @@ pub fn build(b: *std.Build) void {
     });
 
     // Use mach-glfw.
-    const mach_glfw_dep = b.dependency("mach-glfw", .{
-        .target = target,
-        .optimize = optimize,
-    });
-    exe.root_module.addImport("mach-glfw", mach_glfw_dep.module("mach-glfw"));
+    // const mach_glfw_dep = b.dependency("mach-glfw", .{
+    //     .target = target,
+    //     .optimize = optimize,
+    // });
+    // exe.root_module.addImport("mach-glfw", mach_glfw_dep.module("mach-glfw"));
 
-    // Use zigglgen to generate OpenGL bindings.
-    const gl_bindings = @import("zigglgen").generateBindingsModule(b, .{
-        .api = .gl,
-        .version = .@"4.1", // OpenGL 4.1 is the last version supported on macOS.
-        .profile = .core,
-    });
-    exe.root_module.addImport("gl", gl_bindings);
+    // // Use zigglgen to generate OpenGL bindings.
+    // const gl_bindings = @import("zigglgen").generateBindingsModule(b, .{
+    //     .api = .gl,
+    //     .version = .@"4.1", // OpenGL 4.1 is the last version supported on macOS.
+    //     .profile = .core,
+    // });
+    // exe.root_module.addImport("gl", gl_bindings);
 
     // Raylib
     const raylib_dep = b.dependency("raylib-zig", .{
