@@ -16,6 +16,10 @@ To get ZLS working I folowed [this guide](https://ziggit.dev/t/zls-not-working-w
 
 ## Versions
 
+1. Zig `0.14.0-dev.1911+3bf89f55c` (same ZLS version)
+
+## Versions (old)
+
 1. [zigglgen](https://github.com/castholm/zigglgen/releases)
 
 - `0.2.3`
