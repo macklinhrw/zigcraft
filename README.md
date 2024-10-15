@@ -1,5 +1,9 @@
 # ZigCraft
 
+## Prerequisites
+
+- Install the correct version of Zig (see 'Versions' below), you can use zigup.
+
 ## Steps to Recreate
 
 I used `zig fetch --save [url]` for adding dependencies properly (url is a link to an archive).
@@ -12,7 +16,13 @@ ln -s /path/to/unarchived/installation/zig /usr/local/bin/zig
 
 To build and run: `zig build run`
 
-To get ZLS working I folowed [this guide](https://ziggit.dev/t/zls-not-working-with-imported-raylib/3986/3).
+## ZLS Issues
+
+To get ZLS working I followed [this guide](https://ziggit.dev/t/zls-not-working-with-imported-raylib/3986/3).
+
+Basically, I cloned the repo, changed my Zig version (using zigup), then created a symbolic link for the built executeable to `/usr/local/bin/zls`.
+
+Then, I added the file path to my VSCode configuration.
 
 ## Versions
 
