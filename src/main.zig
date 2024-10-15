@@ -1,3 +1,4 @@
+const std = @import("std");
 const rl = @import("raylib");
 
 pub fn main() anyerror!void {
@@ -24,9 +25,15 @@ pub fn main() anyerror!void {
         rl.beginDrawing();
         defer rl.endDrawing();
 
-        rl.clearBackground(rl.Color.white);
+        rl.clearBackground(rl.Color.black);
 
-        rl.drawText("Congrats! You created your first window!", 190, 200, 20, rl.Color.light_gray);
+        // Create a buffer to hold the formatted string.
+        var buffer: [1024]u8 = undefined;
+
+        // Format the string into the buffer and get the slice.
+        const mouseCoordinatesString = try std.fmt.bufPrintZ(&buffer, "Mouse Coordinates: ({}, {})", .{ rl.getMouseX(), rl.getMouseY() });
+
+        rl.drawText(mouseCoordinatesString, 190, 200, 20, rl.Color.white);
         //----------------------------------------------------------------------------------
     }
 }
