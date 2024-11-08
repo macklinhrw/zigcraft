@@ -3,3 +3,5 @@ zig-out
 aider/*
 .aider*
 .env
+raylib-zig/*
+raylib-zig
