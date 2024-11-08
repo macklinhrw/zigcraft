@@ -36,6 +36,9 @@ pub fn build(b: *std.Build) void {
         .optimize = optimize,
     });
 
+    const dep_curl = b.dependency("curl", .{});
+    exe.root_module.addImport("curl", dep_curl.module("curl"));
+
     // Use mach-glfw.
     // const mach_glfw_dep = b.dependency("mach-glfw", .{
     //     .target = target,
@@ -64,6 +67,8 @@ pub fn build(b: *std.Build) void {
     exe.linkLibrary(raylib_artifact);
     exe.root_module.addImport("raylib", raylib);
     exe.root_module.addImport("raygui", raygui);
+
+    exe.linkLibC();
 
     // This declares intent for the executable to be installed into the
     // standard location when the user invokes the "install" step (the default
@@ -104,10 +109,13 @@ pub fn build(b: *std.Build) void {
     // const run_lib_unit_tests = b.addRunArtifact(lib_unit_tests);
 
     const exe_unit_tests = b.addTest(.{
-        .root_source_file = b.path("src/main.zig"),
+        .root_source_file = b.path("src/test.zig"),
         .target = target,
         .optimize = optimize,
     });
+
+    exe_unit_tests.root_module.addImport("curl", dep_curl.module("curl"));
+    exe_unit_tests.linkLibC();
 
     const run_exe_unit_tests = b.addRunArtifact(exe_unit_tests);
 
