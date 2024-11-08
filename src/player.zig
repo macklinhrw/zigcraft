@@ -24,11 +24,12 @@ pub const Player = struct {
     // Constructor function to create a new Player
     pub fn create(world: *World, position: rl.Vector3) Player {
         const eye_height = 1.8; // Player's eye height
+        _ = eye_height;
         return Player{
             .world = world,
             .camera = rl.Camera3D{
-                .position = rlm.vector3Add(position, rl.Vector3.init(0.0, eye_height, 0.0)),
-                .target = position,
+                .position = rl.Vector3.init(50.0, 50.0, 50.0), // Move camera back and up
+                .target = rl.Vector3.init(0.0, 0.0, 0.0), // Look at origin
                 .up = rl.Vector3.init(0.0, 1.0, 0.0),
                 .fovy = 60.0,
                 .projection = rl.CameraProjection.camera_perspective,

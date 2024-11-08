@@ -18,13 +18,13 @@ pub const World = struct {
             .center_offset = rl.Vector3.init(0.0, 0.0, 0.0),
         };
 
-        // Create initial chunks
-        var x: f32 = 0;
-        var y: f32 = 0;
-        while (x < 1) : (x += 1) {
-            while (y < 1) : (y += 1) {
-                const chunk = try Chunk.create(allocator, &world, rl.Vector3.init(x, -1, y));
-                // Append the chunk to the world's chunks list
+        // Create initial chunks in a 2x2 grid around origin
+        for (0..2) |x| {
+            for (0..2) |z| {
+                const chunk = try Chunk.create(allocator, &world, rl.Vector3.init(@as(f32, @floatFromInt(x)) - 1.0, // Center around origin
+                    0.0, // At ground level
+                    @as(f32, @floatFromInt(z)) - 1.0 // Center around origin
+                ));
                 try world.chunks.append(chunk);
             }
         }
@@ -32,9 +32,21 @@ pub const World = struct {
         return world;
     }
 
-    pub fn render(self: @This()) void {
-        for (self.chunks.items) |chunk| {
+    pub fn render(self: *World) void {
+        // Draw world origin for reference
+        rl.drawCube(rl.Vector3.init(0.0, 0.0, 0.0), 2.0, 2.0, 2.0, rl.Color.red);
+        rl.drawGrid(100, 1.0);
+
+        for (self.chunks.items) |*chunk| {
             chunk.render();
+
+            // Draw chunk bounds
+            const pos = rl.Vector3{
+                .x = chunk.position.x * @as(f32, @floatFromInt(32)),
+                .y = chunk.position.y * @as(f32, @floatFromInt(32)),
+                .z = chunk.position.z * @as(f32, @floatFromInt(32)),
+            };
+            rl.drawCubeWires(pos, 32.0, 32.0, 32.0, rl.Color.yellow);
         }
     }
 
