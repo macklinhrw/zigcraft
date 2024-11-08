@@ -87,7 +87,7 @@ pub const OpenAI = struct {
     fn get_headers(alloc: std.mem.Allocator, api_key: []const u8) !std.http.Headers {
         var headers = std.http.Headers.init(alloc);
         try headers.append("Content-Type", "application/json");
-        var auth_header = try std.fmt.allocPrint(alloc, "Bearer {s}", .{api_key});
+        const auth_header = try std.fmt.allocPrint(alloc, "Bearer {s}", .{api_key});
         defer alloc.free(auth_header);
         try headers.append("Authorization", auth_header);
         return headers;
@@ -201,19 +201,19 @@ test "completion" {
     var openai = try OpenAI.init(alloc, api_key.?, null);
     defer openai.deinit();
 
-    var system_message = .{
+    const system_message = .{
         .role = "system",
         .content = "You are a helpful assistant",
     };
 
-    var user_message = .{
+    const user_message = .{
         .role = "user",
         .content = "Write a 1 line haiku",
     };
 
     var messages = [2]Message{ system_message, user_message };
 
-    var payload = CompletionPayload{
+    const payload = CompletionPayload{
         .model = "gpt-3.5-turbo",
         .messages = &messages,
         .max_tokens = 64,
